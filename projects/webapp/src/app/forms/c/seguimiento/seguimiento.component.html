@@ -1,1 +1,202 @@
-<p>seguimiento works!</p>
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">Proyecto Mentores</span>
+</nav>
+
+<div class="container mt-5">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Testing</h4>
+    <p class="mb-0">
+      Este formulario es una version de prueba, todos los datos que se suban a traves del formulario
+      serán eliminados
+    </p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <h4>Seguimiento a Estudiantes de Nuevo Ingreso</h4>
+  <p>
+    <span>Octubre 2019 - febrero 2020</span>
+    <br />
+    <small>(Deberá ser completado por el Estudiante Mentor)</small>
+  </p>
+
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <th scope="row">Unidad Responsable:</th>
+        <td>Vicerrectorado Académico:</td>
+      </tr>
+      <tr>
+        <th scope="row">Proyecto:</th>
+        <td>
+          Estudiante Mentores para alumnos de nuevo ingreso
+          <br />
+          Modalidad Presencial
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Periodo Académico:</th>
+        <td>
+          Octubre 2019 - Febrero 2020
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Estudiante de:</th>
+        <td>
+          Primer ciclo
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-center mt-5">
+    <h3>ACOMPAÑAMIENTO PRIMER BIMESTRE</h3>
+  </div>
+
+  <form class="mt-3">
+    <div class="row">
+      <div class="col-md">
+        <div class="form-group row">
+          <label for="nombreMenor" class="col-sm-6 col-form-label">
+            Estudiante Mentor:
+          </label>
+          <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control-plaintext"
+              id="nombreMenor"
+              placeholder="Nombre"
+            />
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Usuario UTPL del mentor"
+            aria-label="Usuario UTPL del mentor"
+            aria-describedby="addon1"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text" id="addon1">@utpl.edu.ec</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="form-group row">
+          <label for="nombreEstudiante" class="col-sm-6 col-form-label">
+            Estudiante de Nuevo Ingreso:
+          </label>
+          <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control-plaintext"
+              id="nombreEstudiante"
+              placeholder="Nombre"
+            />
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Usuario UTPL del estudiante de nuevo ingreso"
+            aria-label="Usuario UTPL del estudiante de nuevo ingreso"
+            aria-describedby="addon2"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text" id="addon2">@utpl.edu.ec</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form>
+    <div class="form-group row">
+      <label for="about" class="col-sm-2 col-form-label">Temas Desarrollados</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="about" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="problem" class="col-sm-2 col-form-label">Descripción del Problema</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="problem" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="solution" class="col-sm-2 col-form-label">Soluciones</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="solution" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2">Seguimiento</div>
+      <div class="col-sm-10">
+        <p class="mb-0">
+          Marcar el tipo de acercamiento que se mantuvo con el estudiante de nuevo ingreso.
+        </p>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label classf="form-check-label" for="gridCheck1">
+            Reunion
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Virtual
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2">Tipos de problemas encontrados</div>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Académicos
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Administrativos
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Socioeconómicos
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Perfil cognitivo
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Otros
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck1" />
+          <label class="form-check-label" for="gridCheck1">
+            Ninguno
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </div>
+    </div>
+  </form>
+</div>
