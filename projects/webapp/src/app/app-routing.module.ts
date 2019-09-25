@@ -6,6 +6,7 @@ const routes: Routes = [
     path: 'formularios',
     loadChildren: () => import('./forms/forms.module').then(m => m.FormsModule)
   },
+  { path: '', redirectTo: 'formularios', pathMatch: 'full' },
   {
     path: '**',
     redirectTo: ''
