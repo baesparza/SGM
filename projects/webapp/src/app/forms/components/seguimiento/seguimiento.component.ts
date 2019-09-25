@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./seguimiento.component.css']
 })
 export class SeguimientoComponent implements OnInit {
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(private readonly fb: FormBuilder, private readonly db: AngularFirestore) {}
 
   followingForm: FormGroup;
 
@@ -25,7 +26,9 @@ export class SeguimientoComponent implements OnInit {
     });
   }
 
-  submit() {
+  async submit() {
     console.log(this.followingForm.value);
+
+    await this.db.collection('forms/seguimiento/responses').add(this.followingForm.value);
   }
 }
