@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sgm-seguimiento',
@@ -8,7 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./seguimiento.component.css']
 })
 export class SeguimientoComponent implements OnInit {
-  constructor(private readonly fb: FormBuilder, private readonly db: AngularFirestore) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly db: AngularFirestore,
+    private router: Router
+  ) {}
 
   followingForm: FormGroup;
   private validated = false;
@@ -36,6 +41,7 @@ export class SeguimientoComponent implements OnInit {
     try {
       await this.db.collection('forms/seguimiento/responses').add(this.followingForm.value);
       alert('Todos los cambios están guardados');
+      this.router.navigate(['/formularios']);
     } catch (error) {
       alert('Ocurrió un erro al guardar... Vuelve a intentarlo');
     }
@@ -80,5 +86,8 @@ export class SeguimientoComponent implements OnInit {
   get isProblemTypeInvalid() {
     const control = this.followingForm.controls.problemType;
     return control.invalid && (control.touched || this.validated);
+  }
+  get isButtonDisabled() {
+    return this.followingForm.invalid && this.validated;
   }
 }

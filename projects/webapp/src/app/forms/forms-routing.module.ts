@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
+import { FormsComponent } from './components/forms/forms.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'seguimiento',
-    pathMatch: 'full'
+    component: FormsComponent
   },
   {
     path: 'seguimiento',
