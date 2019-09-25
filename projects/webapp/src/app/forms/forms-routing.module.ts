@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsComponent } from './forms.component';
-import { SeguimientoComponent } from './c/seguimiento/seguimiento.component';
+import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 
 const routes: Routes = [
   {

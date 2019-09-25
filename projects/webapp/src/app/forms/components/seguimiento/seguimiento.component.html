@@ -6,8 +6,8 @@
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <h4 class="alert-heading">Testing</h4>
     <p class="mb-0">
-      Este formulario es una version de prueba, todos los datos que se suban a
-      traves del formulario serán eliminados
+      Este formulario es una version de prueba, todos los datos que se suban a traves del formulario
+      serán eliminados
     </p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -112,9 +112,7 @@
             formControlName="studentUsername"
           />
           <div class="input-group-append">
-            <span class="input-group-text" id="studentUsername"
-              >@utpl.edu.ec</span
-            >
+            <span class="input-group-text" id="studentUsername">@utpl.edu.ec</span>
           </div>
         </div>
       </div>
@@ -124,12 +122,7 @@
         Temas Desarrollados
       </label>
       <div class="col-md-10">
-        <textarea
-          formControlName="topic"
-          class="form-control"
-          id="topic"
-          rows="4"
-        ></textarea>
+        <textarea formControlName="topic" class="form-control" id="topic" rows="4"></textarea>
       </div>
     </div>
     <div class="form-group row">
@@ -137,12 +130,7 @@
         Descripción del Problema
       </label>
       <div class="col-md-10">
-        <textarea
-          class="form-control"
-          id="problems"
-          formControlName="problems"
-          rows="4"
-        ></textarea>
+        <textarea class="form-control" id="problems" formControlName="problems" rows="4"></textarea>
       </div>
     </div>
     <div class="form-group row">
@@ -160,8 +148,7 @@
       <div class="col-md-2">Seguimiento</div>
       <div class="col-md-10">
         <p class="mb-2">
-          Marcar el tipo de acercamiento que se mantuvo con el estudiante de
-          nuevo ingreso.
+          Marcar el tipo de acercamiento que se mantuvo con el estudiante de nuevo ingreso.
         </p>
         <select class="custom-select" formControlName="follow">
           <option selected>Abre este menu y selecciona uno</option>
@@ -183,10 +170,8 @@
         </select>
       </div>
     </div>
-    <div class="form-group row">
-      <div class="col-md-10">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </div>
+    <div class="form-group mt-5">
+      <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </form>
 </div>
