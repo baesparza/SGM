@@ -54,20 +54,27 @@
     <h3>ACOMPAÑAMIENTO PRIMER BIMESTRE</h3>
   </div>
 
-  <form class="mt-3" [formGroup]="followingForm" (ngSubmit)="submit()">
+  <form
+    class="mt-3"
+    [formGroup]="followingForm"
+    (ngSubmit)="submit()"
+    [ngClass]="{ 'was-validated': isFormValid }"
+  >
     <div class="row">
       <div class="col-md">
         <div class="form-group row">
-          <label class="col-md-4 col-form-label" for="mentorName">
+          <label class="col-md-5 col-form-label" for="mentorName">
             Nombre Mentor:
           </label>
-          <div class="col-md-8">
+          <div class="col-md-7">
             <input
+              invalid
               formControlName="mentorName"
               type="text"
-              class="form-control-plaintext"
+              class="form-control"
               id="mentorName"
               placeholder="Nombre"
+              [ngClass]="{ 'is-invalid': isMentorNameInvalid }"
             />
           </div>
         </div>
@@ -79,26 +86,31 @@
             placeholder="Usuario UTPL del mentor"
             aria-label="Usuario UTPL del mentor"
             aria-describedby="mentorUsername"
+            [ngClass]="{ 'is-invalid': isMentorUsernameInvalid }"
           />
           <div class="input-group-append">
             <span class="input-group-text" id="mentorUsername">
               @utpl.edu.ec
             </span>
           </div>
+          <div class="invalid-feedback" *ngIf="isMentorUsernameInvalid">
+            Tiene que ser un formato de usuario UTPL valido.
+          </div>
         </div>
       </div>
       <div class="col-md">
         <div class="form-group row">
-          <label for="studentName" class="col-md-4 col-form-label">
+          <label for="studentName" class="col-md-5 col-form-label">
             Nombre Estudiante:
           </label>
-          <div class="col-md-8">
+          <div class="col-md-7">
             <input
               formControlName="studentName"
               type="text"
-              class="form-control-plaintext"
+              class="form-control"
               id="studentName"
               placeholder="Nombre"
+              [ngClass]="{ 'is-invalid': isStudentNameInvalid }"
             />
           </div>
         </div>
@@ -110,9 +122,13 @@
             aria-label="Usuario UTPL del estudiante de nuevo ingreso"
             aria-describedby="studentUsername"
             formControlName="studentUsername"
+            [ngClass]="{ 'is-invalid': isStudentUsernameInvalid }"
           />
           <div class="input-group-append">
             <span class="input-group-text" id="studentUsername">@utpl.edu.ec</span>
+          </div>
+          <div class="invalid-feedback" *ngIf="isStudentUsernameInvalid">
+            Tiene que ser un formato de usuario UTPL valido.
           </div>
         </div>
       </div>
@@ -122,7 +138,13 @@
         Temas Desarrollados
       </label>
       <div class="col-md-10">
-        <textarea formControlName="topic" class="form-control" id="topic" rows="4"></textarea>
+        <textarea
+          formControlName="topic"
+          class="form-control"
+          id="topic"
+          rows="4"
+          [ngClass]="{ 'is-invalid': isTopicInvalid }"
+        ></textarea>
       </div>
     </div>
     <div class="form-group row">
@@ -130,7 +152,13 @@
         Descripción del Problema
       </label>
       <div class="col-md-10">
-        <textarea class="form-control" id="problems" formControlName="problems" rows="4"></textarea>
+        <textarea
+          class="form-control"
+          id="problems"
+          formControlName="problems"
+          rows="4"
+          [ngClass]="{ 'is-invalid': isProblemsInvalid }"
+        ></textarea>
       </div>
     </div>
     <div class="form-group row">
@@ -141,6 +169,7 @@
           formControlName="solutions"
           id="solutions"
           rows="4"
+          [ngClass]="{ 'is-invalid': isSolutionsInvalid }"
         ></textarea>
       </div>
     </div>
@@ -150,8 +179,12 @@
         <p class="mb-2">
           Marcar el tipo de acercamiento que se mantuvo con el estudiante de nuevo ingreso.
         </p>
-        <select class="custom-select" formControlName="follow">
-          <option selected>Abre este menu y selecciona uno</option>
+        <select
+          class="custom-select"
+          formControlName="follow"
+          [ngClass]="{ 'is-invalid': isFollowInvalid }"
+        >
+          <option selected></option>
           <option value="reunion">Reunión</option>
           <option value="virtual">Virtual</option>
         </select>
@@ -160,8 +193,12 @@
     <div class="form-group row">
       <div class="col-md-2">Tipos de problemas encontrados</div>
       <div class="col-md-10">
-        <select class="custom-select" formControlName="problemType">
-          <option selected>Abre este menu y selecciona uno</option>
+        <select
+          class="custom-select"
+          formControlName="problemType"
+          [ngClass]="{ 'is-invalid': isProblemTypeInvalid }"
+        >
+          <option selected></option>
           <option value="academicos">Académicos</option>
           <option value="administrativos">Administrativos</option>
           <option value="socioeconomicos">Socioeconómicos</option>
