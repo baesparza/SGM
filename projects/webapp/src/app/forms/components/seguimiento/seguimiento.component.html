@@ -6,8 +6,8 @@
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <h4 class="alert-heading">Testing</h4>
     <p class="mb-0">
-      Este formulario es una version de prueba, todos los datos que se suban a traves del formulario
-      serán eliminados
+      Este formulario es una version de prueba, todos los datos que se suban a
+      traves del formulario serán eliminados
     </p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -125,7 +125,9 @@
             [ngClass]="{ 'is-invalid': isStudentUsernameInvalid }"
           />
           <div class="input-group-append">
-            <span class="input-group-text" id="studentUsername">@utpl.edu.ec</span>
+            <span class="input-group-text" id="studentUsername"
+              >@utpl.edu.ec</span
+            >
           </div>
           <div class="invalid-feedback" *ngIf="isStudentUsernameInvalid">
             Tiene que ser un formato de usuario UTPL valido.
@@ -177,7 +179,8 @@
       <div class="col-md-2">Seguimiento</div>
       <div class="col-md-10">
         <p class="mb-2">
-          Marcar el tipo de acercamiento que se mantuvo con el estudiante de nuevo ingreso.
+          Marcar el tipo de acercamiento que se mantuvo con el estudiante de
+          nuevo ingreso.
         </p>
         <select
           class="custom-select"
@@ -207,9 +210,17 @@
         </select>
       </div>
     </div>
-    <div class="d-flex justify-content-end">
-      <a class="btn btn-link" [routerLink]="['/formularios']">Volver al Inicio</a>
-      <button type="submit" class="btn btn-primary" [disabled]="isButtonDisabled">Guardar</button>
+    <div class="form-group d-flex justify-content-end">
+      <a class="btn btn-link" [routerLink]="['/formularios']"
+        >Volver al Inicio</a
+      >
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isButtonDisabled"
+      >
+        Guardar
+      </button>
     </div>
   </form>
 </div>
