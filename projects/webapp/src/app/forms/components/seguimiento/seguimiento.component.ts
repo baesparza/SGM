@@ -34,12 +34,32 @@ export class SeguimientoComponent implements OnInit {
 
   async submit() {
     this.validated = true;
+    const formValue = this.followingForm.value;
+
     if (this.followingForm.invalid) {
       alert('La format tiene campos incompletos');
       return;
     }
+
+    const confirmation = confirm(
+      `Se enviara un correo a ${formValue.studentUsername}@utpl.edu.ec para que confirme la información proveída. Desea continuar?`
+    );
+
+    if (!confirmation) {
+      return;
+    }
+
     try {
-      await this.db.collection('forms/seguimiento/responses').add(this.followingForm.value);
+      await this.db.collection('forms/seguimiento/responses').add({
+        ...formValue,
+        acceptKey: Math.random()
+          .toString(36)
+          .substring(7),
+        rejectKey: Math.random()
+          .toString(36)
+          .substring(7),
+        confirmationStatus: 'WAITING'
+      });
       alert('Todos los cambios están guardados');
       this.router.navigate(['/formularios']);
     } catch (error) {
