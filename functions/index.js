@@ -1,9 +1,7 @@
 const functions = require('firebase-functions');
 const sgMail = require('@sendgrid/mail');
 
-sgMail.setApiKey(
-  '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'
-);
+sgMail.setApiKey(functions.config().sendgrid.apikey);
 
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
