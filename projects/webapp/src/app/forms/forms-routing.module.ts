@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 import { FormsComponent } from './components/forms/forms.component';
+import { SeguimientoResolver } from './providers/seguimiento.resolver';
 
 const routes: Routes = [
   {
@@ -10,7 +11,10 @@ const routes: Routes = [
   },
   {
     path: 'seguimiento',
-    component: SeguimientoComponent
+    component: SeguimientoComponent,
+    resolve: {
+      seguimientoResolver: SeguimientoResolver
+    }
   }
 ];
 

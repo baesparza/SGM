@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sgm-seguimiento',
@@ -12,18 +13,40 @@ export class SeguimientoComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly db: AngularFirestore,
-    private router: Router
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   followingForm: FormGroup;
   private validated = false;
 
+  problemTypes: string[];
+  followingTypes: string[];
+
   ngOnInit() {
+    this.createForm();
+
+    this.route.data
+      .pipe(map(data => data.seguimientoResolver))
+      .subscribe(data => {
+        this.problemTypes = data.problemTypes;
+        this.followingTypes = data.followingTypes;
+      })
+      .unsubscribe();
+  }
+
+  private createForm() {
     this.followingForm = this.fb.group({
       mentorName: [null, Validators.required],
-      mentorUsername: [null, [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]],
+      mentorUsername: [
+        null,
+        [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
+      ],
       studentName: [null, Validators.required],
-      studentUsername: [null, [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]],
+      studentUsername: [
+        null,
+        [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
+      ],
       topic: [null, Validators.required],
       problems: [null, Validators.required],
       solutions: [null, Validators.required],

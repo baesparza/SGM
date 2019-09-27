@@ -188,8 +188,9 @@
           [ngClass]="{ 'is-invalid': isFollowInvalid }"
         >
           <option selected></option>
-          <option value="reunion">Reunión</option>
-          <option value="virtual">Virtual</option>
+          <option *ngFor="let item of followingTypes" [value]="item">
+            {{ item }}
+          </option>
         </select>
       </div>
     </div>
@@ -202,11 +203,9 @@
           [ngClass]="{ 'is-invalid': isProblemTypeInvalid }"
         >
           <option selected></option>
-          <option value="academicos">Académicos</option>
-          <option value="administrativos">Administrativos</option>
-          <option value="socioeconomicos">Socioeconómicos</option>
-          <option value="otros">Otros</option>
-          <option value="ninguno">Ninguno</option>
+          <option *ngFor="let item of problemTypes" [value]="item">
+            {{ item }}
+          </option>
         </select>
       </div>
     </div>
