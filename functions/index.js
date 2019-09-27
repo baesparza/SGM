@@ -20,9 +20,9 @@ exports.mailSeguimientoForm = functions.firestore
       dynamic_template_data: Object.assign(responseData, {
         rejectLink: `https://${base_url}/validate-form/${formId}/${responseData.rejectKey}`,
         approveLink: `https://${base_url}/validate-form/${formId}/${responseData.acceptKey}`,
-        formId
-      }),
-      subject: 'Validación Seguimiento - Proyecto Mentores'
+        formId,
+        subject: 'Validación Seguimiento - Proyecto Mentores'
+      })
     };
     try {
       let res = await sgMail.send(msg);
@@ -45,17 +45,18 @@ exports.confirmSeguimientoForm = functions.firestore
       templateId: 'd-3c06731ec93343b797e4af2d13ececfe',
       dynamic_template_data: Object.assign(newResponseData, {
         formId: responseId
-      }),
-      subject: 'Validación Seguimiento - Proyecto Mentores'
+      })
     };
 
     if (newResponseData.confirmationStatus === 'ACCEPTED') {
       // Confirmed
-      msg.subject = 'Tu Formulario de Seguimiento ha sido aceptado - Proyecto Mentores';
+      msg.dynamic_template_data.subject =
+        'Tu Formulario de Seguimiento ha sido ACEPTADO - Proyecto Mentores';
       msg.dynamic_template_data.status = 'ACEPTADO';
     } else if (newResponseData.confirmationStatus === 'REJECTED') {
       // Rejected
-      msg.subject = 'Tu Formulario de Seguimiento ha sido rechazado - Proyecto Mentores';
+      msg.dynamic_template_data.subject =
+        'Tu Formulario de Seguimiento ha sido RECHAZADO - Proyecto Mentores';
       msg.dynamic_template_data.status = 'RECHAZADO';
     } else {
       return;
@@ -89,12 +90,20 @@ exports.validateForm = functions.https.onRequest(async (req, res) => {
     await db
       .collection(`forms/seguimiento/responses/`)
       .doc(formId)
-      .update({ acceptKey: null, rejectKey: null, confirmationStatus: 'ACCEPTED' });
+      .update({
+        acceptKey: null,
+        rejectKey: null,
+        confirmationStatus: 'ACCEPTED'
+      });
   } else if (doc.rejectKey === keyID) {
     await db
       .collection(`forms/seguimiento/responses/`)
       .doc(formId)
-      .update({ acceptKey: null, rejectKey: null, confirmationStatus: 'REJECTED' });
+      .update({
+        acceptKey: null,
+        rejectKey: null,
+        confirmationStatus: 'REJECTED'
+      });
   } else {
     return res.send('Este documento ya fue confirmado.');
   }
