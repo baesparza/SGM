@@ -51,7 +51,7 @@ export class SeguimientoComponent implements OnInit {
       problems: [null, Validators.required],
       solutions: [null, Validators.required],
       follow: [null, Validators.required],
-      problemType: [null, Validators.required]
+      problemTypes: [null, Validators.required]
     });
   }
 
@@ -64,11 +64,11 @@ export class SeguimientoComponent implements OnInit {
       return;
     }
 
-    const confirmation = confirm(
-      `Se enviara un correo a ${formValue.studentUsername}@utpl.edu.ec para que confirme la información proveída. Desea continuar?`
-    );
-
-    if (!confirmation) {
+    if (
+      !confirm(
+        `Se enviara un correo a ${formValue.studentUsername}@utpl.edu.ec para que confirme la información proveída. Desea continuar?`
+      )
+    ) {
       return;
     }
 
@@ -126,8 +126,8 @@ export class SeguimientoComponent implements OnInit {
     const control = this.followingForm.controls.follow;
     return control.invalid && (control.touched || this.validated);
   }
-  get isProblemTypeInvalid() {
-    const control = this.followingForm.controls.problemType;
+  get isProblemTypesInvalid() {
+    const control = this.followingForm.controls.problemTypes;
     return control.invalid && (control.touched || this.validated);
   }
   get isButtonDisabled() {

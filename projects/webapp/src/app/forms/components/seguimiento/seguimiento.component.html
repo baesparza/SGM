@@ -199,14 +199,19 @@
       <div class="col-md-10">
         <select
           class="custom-select"
-          formControlName="problemType"
-          [ngClass]="{ 'is-invalid': isProblemTypeInvalid }"
+          formControlName="problemTypes"
+          [ngClass]="{ 'is-invalid': isProblemTypesInvalid }"
+          multiple
+          [size]="problemTypes.length"
         >
-          <option selected></option>
           <option *ngFor="let item of problemTypes" [value]="item">
             {{ item }}
           </option>
         </select>
+        <small id="passwordHelpBlock" class="form-text text-muted">
+          Para seleccionar multiple items de la lista, presiona
+          <code>Ctrl + Click</code> en windows o <code>⌘ + Click</code> en Mac
+        </small>
       </div>
     </div>
     <div class="form-group d-flex justify-content-end">
