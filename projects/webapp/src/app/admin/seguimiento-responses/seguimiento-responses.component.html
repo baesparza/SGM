@@ -1,0 +1,78 @@
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">Proyecto Mentores</span>
+</nav>
+
+<div class="container mt-5">
+  <h4>Respuestas al Formulario - Seguimiento a Estudiantes de Nuevo Ingreso</h4>
+  <p>
+    <span>Octubre 2019 - febrero 2020</span>
+  </p>
+
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <th scope="row">Unidad Responsable:</th>
+        <td>Vicerrectorado Académico</td>
+      </tr>
+      <tr>
+        <th scope="row">Proyecto:</th>
+        <td>
+          Estudiante Mentores para alumnos de nuevo ingreso
+          <br />
+          Modalidad Presencial
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Periodo Académico:</th>
+        <td>
+          Octubre 2019 - Febrero 2020
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Estudiante de:</th>
+        <td>
+          Primer ciclo
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-center mt-5">
+    <h3>ACOMPAÑAMIENTO PRIMER BIMESTRE</h3>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Mentor</th>
+        <th scope="col">Estudiantes</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let res of responses; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ res.mentorName }}</td>
+        <td>{{ res.studentName }}</td>
+        <td>{{ res.confirmationStatus }}</td>
+        <td>
+          <a
+            class="btn btn-link"
+            [routerLink]="['/formularios/seguimiento/visualizar', res.id]"
+            routerLinkActive="router-link-active"
+          >
+            Visualizar
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="form-group d-flex justify-content-end">
+    <a class="btn btn-link" [routerLink]="['/admin']">
+      Volver al Inicio
+    </a>
+  </div>
+</div>

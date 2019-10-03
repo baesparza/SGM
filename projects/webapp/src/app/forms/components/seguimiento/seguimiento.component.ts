@@ -23,35 +23,58 @@ export class SeguimientoComponent implements OnInit {
   problemTypes: string[];
   followingTypes: string[];
 
-  ngOnInit() {
-    this.createForm();
+  response: any;
 
+  ngOnInit() {
     this.route.data
-      .pipe(map(data => data.seguimientoResolver))
       .subscribe(data => {
-        this.problemTypes = data.problemTypes;
-        this.followingTypes = data.followingTypes;
+        this.problemTypes = data.formData.problemTypes;
+        this.followingTypes = data.formData.followingTypes;
+        this.response = data.response;
+
+        this.createForm();
       })
       .unsubscribe();
   }
 
   private createForm() {
     this.followingForm = this.fb.group({
-      mentorName: [null, Validators.required],
+      mentorName: [
+        !!this.response ? this.response.mentorName : null,
+        Validators.required
+      ],
       mentorUsername: [
-        null,
+        !!this.response ? this.response.mentorUsername : null,
         [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
       ],
-      studentName: [null, Validators.required],
+      studentName: [
+        !!this.response ? this.response.studentName : null,
+        Validators.required
+      ],
       studentUsername: [
-        null,
+        !!this.response ? this.response.studentUsername : null,
         [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
       ],
-      topic: [null, Validators.required],
-      problems: [null, Validators.required],
-      solutions: [null, Validators.required],
-      follow: [null, Validators.required],
-      problemTypes: [null, Validators.required]
+      topic: [
+        !!this.response ? this.response.topic : null,
+        Validators.required
+      ],
+      problems: [
+        !!this.response ? this.response.problems : null,
+        Validators.required
+      ],
+      solutions: [
+        !!this.response ? this.response.solutions : null,
+        Validators.required
+      ],
+      follow: [
+        !!this.response ? this.response.follow : null,
+        Validators.required
+      ],
+      problemTypes: [
+        !!this.response ? this.response.problemTypes : null,
+        Validators.required
+      ]
     });
   }
 
@@ -87,6 +110,14 @@ export class SeguimientoComponent implements OnInit {
       this.router.navigate(['/formularios']);
     } catch (error) {
       alert('Ocurrió un erro al guardar... Vuelve a intentarlo');
+    }
+  }
+
+  return() {
+    if (!!this.response) {
+      this.router.navigate(['/admin/seguimiento']);
+    } else {
+      this.router.navigate(['/formularios']);
     }
   }
 

@@ -3,18 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+  {
     path: 'formularios',
     loadChildren: () => import('./forms/forms.module').then(m => m.FormsModule)
-  },
-  { path: '', redirectTo: 'formularios', pathMatch: 'full' },
-  {
-    path: '**',
-    redirectTo: ''
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

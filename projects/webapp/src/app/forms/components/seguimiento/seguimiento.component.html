@@ -60,168 +60,173 @@
     (ngSubmit)="submit()"
     [ngClass]="{ 'was-validated': isFormValid }"
   >
-    <div class="row">
-      <div class="col-md">
-        <div class="form-group row">
-          <label class="col-md-5 col-form-label" for="mentorName">
-            Nombre Mentor:
-          </label>
-          <div class="col-md-7">
+    <fieldset disabled>
+      <div class="row">
+        <div class="col-md">
+          <div class="form-group row">
+            <label class="col-md-5 col-form-label" for="mentorName">
+              Nombre Mentor:
+            </label>
+            <div class="col-md-7">
+              <input
+                invalid
+                formControlName="mentorName"
+                type="text"
+                class="form-control"
+                id="mentorName"
+                placeholder="Nombre"
+                [ngClass]="{ 'is-invalid': isMentorNameInvalid }"
+              />
+            </div>
+          </div>
+          <div class="input-group mb-3">
             <input
-              invalid
-              formControlName="mentorName"
+              formControlName="mentorUsername"
               type="text"
               class="form-control"
-              id="mentorName"
-              placeholder="Nombre"
-              [ngClass]="{ 'is-invalid': isMentorNameInvalid }"
+              placeholder="Usuario UTPL del mentor"
+              aria-label="Usuario UTPL del mentor"
+              aria-describedby="mentorUsername"
+              [ngClass]="{ 'is-invalid': isMentorUsernameInvalid }"
             />
+            <div class="input-group-append">
+              <span class="input-group-text" id="mentorUsername">
+                @utpl.edu.ec
+              </span>
+            </div>
+            <div class="invalid-feedback" *ngIf="isMentorUsernameInvalid">
+              Tiene que ser un formato de usuario UTPL valido.
+            </div>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input
-            formControlName="mentorUsername"
-            type="text"
-            class="form-control"
-            placeholder="Usuario UTPL del mentor"
-            aria-label="Usuario UTPL del mentor"
-            aria-describedby="mentorUsername"
-            [ngClass]="{ 'is-invalid': isMentorUsernameInvalid }"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text" id="mentorUsername">
-              @utpl.edu.ec
-            </span>
+        <div class="col-md">
+          <div class="form-group row">
+            <label for="studentName" class="col-md-5 col-form-label">
+              Nombre Estudiante:
+            </label>
+            <div class="col-md-7">
+              <input
+                formControlName="studentName"
+                type="text"
+                class="form-control"
+                id="studentName"
+                placeholder="Nombre"
+                [ngClass]="{ 'is-invalid': isStudentNameInvalid }"
+              />
+            </div>
           </div>
-          <div class="invalid-feedback" *ngIf="isMentorUsernameInvalid">
-            Tiene que ser un formato de usuario UTPL valido.
-          </div>
-        </div>
-      </div>
-      <div class="col-md">
-        <div class="form-group row">
-          <label for="studentName" class="col-md-5 col-form-label">
-            Nombre Estudiante:
-          </label>
-          <div class="col-md-7">
+          <div class="input-group mb-3">
             <input
-              formControlName="studentName"
               type="text"
               class="form-control"
-              id="studentName"
-              placeholder="Nombre"
-              [ngClass]="{ 'is-invalid': isStudentNameInvalid }"
+              placeholder="Usuario UTPL del estudiante de nuevo ingreso"
+              aria-label="Usuario UTPL del estudiante de nuevo ingreso"
+              aria-describedby="studentUsername"
+              formControlName="studentUsername"
+              [ngClass]="{ 'is-invalid': isStudentUsernameInvalid }"
             />
+            <div class="input-group-append">
+              <span class="input-group-text" id="studentUsername"
+                >@utpl.edu.ec</span
+              >
+            </div>
+            <div class="invalid-feedback" *ngIf="isStudentUsernameInvalid">
+              Tiene que ser un formato de usuario UTPL valido.
+            </div>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input
-            type="text"
+      </div>
+      <div class="form-group row">
+        <label for="topic" class="col-md-2 col-form-label">
+          Temas Desarrollados
+        </label>
+        <div class="col-md-10">
+          <textarea
+            formControlName="topic"
             class="form-control"
-            placeholder="Usuario UTPL del estudiante de nuevo ingreso"
-            aria-label="Usuario UTPL del estudiante de nuevo ingreso"
-            aria-describedby="studentUsername"
-            formControlName="studentUsername"
-            [ngClass]="{ 'is-invalid': isStudentUsernameInvalid }"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text" id="studentUsername"
-              >@utpl.edu.ec</span
-            >
-          </div>
-          <div class="invalid-feedback" *ngIf="isStudentUsernameInvalid">
-            Tiene que ser un formato de usuario UTPL valido.
-          </div>
+            id="topic"
+            rows="4"
+            [ngClass]="{ 'is-invalid': isTopicInvalid }"
+          ></textarea>
         </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="topic" class="col-md-2 col-form-label">
-        Temas Desarrollados
-      </label>
-      <div class="col-md-10">
-        <textarea
-          formControlName="topic"
-          class="form-control"
-          id="topic"
-          rows="4"
-          [ngClass]="{ 'is-invalid': isTopicInvalid }"
-        ></textarea>
+      <div class="form-group row">
+        <label for="problems" class="col-md-2 col-form-label">
+          Descripción del Problema
+        </label>
+        <div class="col-md-10">
+          <textarea
+            class="form-control"
+            id="problems"
+            formControlName="problems"
+            rows="4"
+            [ngClass]="{ 'is-invalid': isProblemsInvalid }"
+          ></textarea>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="problems" class="col-md-2 col-form-label">
-        Descripción del Problema
-      </label>
-      <div class="col-md-10">
-        <textarea
-          class="form-control"
-          id="problems"
-          formControlName="problems"
-          rows="4"
-          [ngClass]="{ 'is-invalid': isProblemsInvalid }"
-        ></textarea>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="solutions" class="col-md-2 col-form-label">Soluciones</label>
-      <div class="col-md-10">
-        <textarea
-          class="form-control"
-          formControlName="solutions"
-          id="solutions"
-          rows="4"
-          [ngClass]="{ 'is-invalid': isSolutionsInvalid }"
-        ></textarea>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-2">Seguimiento</div>
-      <div class="col-md-10">
-        <p class="mb-2">
-          Marcar el tipo de acercamiento que se mantuvo con el estudiante de
-          nuevo ingreso.
-        </p>
-        <select
-          class="custom-select"
-          formControlName="follow"
-          [ngClass]="{ 'is-invalid': isFollowInvalid }"
+      <div class="form-group row">
+        <label for="solutions" class="col-md-2 col-form-label"
+          >Soluciones</label
         >
-          <option selected></option>
-          <option *ngFor="let item of followingTypes" [value]="item">
-            {{ item }}
-          </option>
-        </select>
+        <div class="col-md-10">
+          <textarea
+            class="form-control"
+            formControlName="solutions"
+            id="solutions"
+            rows="4"
+            [ngClass]="{ 'is-invalid': isSolutionsInvalid }"
+          ></textarea>
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-2">Tipos de problemas encontrados</div>
-      <div class="col-md-10">
-        <select
-          class="custom-select"
-          formControlName="problemTypes"
-          [ngClass]="{ 'is-invalid': isProblemTypesInvalid }"
-          multiple
-          [size]="problemTypes.length"
-        >
-          <option *ngFor="let item of problemTypes" [value]="item">
-            {{ item }}
-          </option>
-        </select>
-        <small id="passwordHelpBlock" class="form-text text-muted">
-          Para seleccionar multiple items de la lista, presiona
-          <code>Ctrl + Click</code> en windows o <code>⌘ + Click</code> en Mac
-        </small>
+      <div class="form-group row">
+        <div class="col-md-2">Seguimiento</div>
+        <div class="col-md-10">
+          <p class="mb-2">
+            Marcar el tipo de acercamiento que se mantuvo con el estudiante de
+            nuevo ingreso.
+          </p>
+          <select
+            class="custom-select"
+            formControlName="follow"
+            [ngClass]="{ 'is-invalid': isFollowInvalid }"
+          >
+            <option selected></option>
+            <option *ngFor="let item of followingTypes" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
       </div>
-    </div>
+      <div class="form-group row">
+        <div class="col-md-2">Tipos de problemas encontrados</div>
+        <div class="col-md-10">
+          <select
+            class="custom-select"
+            formControlName="problemTypes"
+            [ngClass]="{ 'is-invalid': isProblemTypesInvalid }"
+            multiple
+            [size]="problemTypes.length"
+          >
+            <option *ngFor="let item of problemTypes" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+          <small id="passwordHelpBlock" class="form-text text-muted">
+            Para seleccionar multiple items de la lista, presiona
+            <code>Ctrl + Click</code> en windows o <code>⌘ + Click</code> en Mac
+          </small>
+        </div>
+      </div>
+    </fieldset>
     <div class="form-group d-flex justify-content-end">
-      <a class="btn btn-link" [routerLink]="['/formularios']"
-        >Volver al Inicio</a
-      >
+      <button class="btn btn-link" (click)="return()">
+        Volver al Inicio
+      </button>
       <button
         type="submit"
         class="btn btn-primary"
         [disabled]="isButtonDisabled"
+        *ngIf="!response"
       >
         Guardar
       </button>

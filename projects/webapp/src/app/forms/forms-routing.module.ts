@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SeguimientoComponent } from './components/seguimiento/seguimiento.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { SeguimientoResolver } from './providers/seguimiento.resolver';
+import { SeguimientoResponseResolver } from './components/seguimiento/seguimiento-response.resolver';
 
 const routes: Routes = [
   {
@@ -13,7 +14,15 @@ const routes: Routes = [
     path: 'seguimiento',
     component: SeguimientoComponent,
     resolve: {
-      seguimientoResolver: SeguimientoResolver
+      formData: SeguimientoResolver
+    }
+  },
+  {
+    path: 'seguimiento/visualizar/:id',
+    component: SeguimientoComponent,
+    resolve: {
+      response: SeguimientoResponseResolver,
+      formData: SeguimientoResolver
     }
   }
 ];
