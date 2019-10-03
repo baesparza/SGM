@@ -137,6 +137,45 @@
         </div>
       </div>
       <div class="form-group row">
+        <div class="col-md-2">Seguimiento</div>
+        <div class="col-md-10">
+          <p class="mb-2">
+            Marcar el tipo de acercamiento que se mantuvo con el estudiante de
+            nuevo ingreso.
+          </p>
+          <select
+            class="custom-select"
+            formControlName="follow"
+            [ngClass]="{ 'is-invalid': isFollowInvalid }"
+          >
+            <option selected></option>
+            <option *ngFor="let item of followingTypes" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2">Tipos de problemas encontrados</div>
+        <div class="col-md-10">
+          <select
+            class="custom-select"
+            formControlName="problemTypes"
+            [ngClass]="{ 'is-invalid': isProblemTypesInvalid }"
+            multiple
+            [size]="problemTypes.length"
+          >
+            <option *ngFor="let item of problemTypes" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+          <small id="passwordHelpBlock" class="form-text text-muted">
+            Para seleccionar multiple items de la lista, presiona
+            <code>Ctrl + Click</code> en windows o <code>⌘ + Click</code> en Mac
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
         <label for="topic" class="col-md-2 col-form-label">
           Temas Desarrollados
         </label>
@@ -176,45 +215,6 @@
             rows="4"
             [ngClass]="{ 'is-invalid': isSolutionsInvalid }"
           ></textarea>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-md-2">Seguimiento</div>
-        <div class="col-md-10">
-          <p class="mb-2">
-            Marcar el tipo de acercamiento que se mantuvo con el estudiante de
-            nuevo ingreso.
-          </p>
-          <select
-            class="custom-select"
-            formControlName="follow"
-            [ngClass]="{ 'is-invalid': isFollowInvalid }"
-          >
-            <option selected></option>
-            <option *ngFor="let item of followingTypes" [value]="item">
-              {{ item }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-md-2">Tipos de problemas encontrados</div>
-        <div class="col-md-10">
-          <select
-            class="custom-select"
-            formControlName="problemTypes"
-            [ngClass]="{ 'is-invalid': isProblemTypesInvalid }"
-            multiple
-            [size]="problemTypes.length"
-          >
-            <option *ngFor="let item of problemTypes" [value]="item">
-              {{ item }}
-            </option>
-          </select>
-          <small id="passwordHelpBlock" class="form-text text-muted">
-            Para seleccionar multiple items de la lista, presiona
-            <code>Ctrl + Click</code> en windows o <code>⌘ + Click</code> en Mac
-          </small>
         </div>
       </div>
     </fieldset>
