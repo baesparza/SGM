@@ -79,6 +79,10 @@ export class SeguimientoComponent implements OnInit {
   }
 
   async submit() {
+    if (!!this.response) {
+      return;
+    }
+
     this.validated = true;
     const formValue = this.followingForm.value;
 

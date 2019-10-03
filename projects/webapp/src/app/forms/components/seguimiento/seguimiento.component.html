@@ -60,7 +60,7 @@
     (ngSubmit)="submit()"
     [ngClass]="{ 'was-validated': isFormValid }"
   >
-    <fieldset disabled>
+    <fieldset [disabled]="!!response">
       <div class="row">
         <div class="col-md">
           <div class="form-group row">
@@ -219,7 +219,7 @@
       </div>
     </fieldset>
     <div class="form-group d-flex justify-content-end">
-      <button class="btn btn-link" (click)="return()">
+      <button class="btn btn-link" (click)="return()" type="button">
         Volver al Inicio
       </button>
       <button
