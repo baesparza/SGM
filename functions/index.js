@@ -12,20 +12,28 @@ exports.mailSeguimientoForm = functions.firestore
   .onCreate(async (change, context) => {
     const responseData = change.data();
     const formId = context.params.id;
+    const students = responseData.students;
 
-    const msg = {
-      to: `${responseData.studentUsername}@utpl.edu.ec`,
-      from: 'bruno.be81@gmail.com',
-      templateId: 'd-db5d5d6bfb6649c1afcb97151da70051',
-      dynamic_template_data: Object.assign(responseData, {
-        rejectLink: `https://${base_url}/validate-form/${formId}/${responseData.rejectKey}`,
-        approveLink: `https://${base_url}/validate-form/${formId}/${responseData.acceptKey}`,
-        formId,
-        subject: 'Validación Seguimiento - Proyecto Mentores'
-      })
-    };
+    const mailQueue = [];
+    students.forEach(student => {
+      const msg = {
+        to: `${student.studentUsername}@utpl.edu.ec`,
+        from: 'bruno.be81@gmail.com',
+        templateId: 'd-db5d5d6bfb6649c1afcb97151da70051',
+        dynamic_template_data: Object.assign(responseData, {
+          rejectLink: `https://${base_url}/validate-form/${formId}/${student.rejectKey}`,
+          approveLink: `https://${base_url}/validate-form/${formId}/${student.acceptKey}`,
+          formId,
+          subject: 'Validación Seguimiento - Proyecto Mentores',
+          student
+        })
+      };
+
+      mailQueue.push(sgMail.send(msg));
+    });
+
     try {
-      let res = await sgMail.send(msg);
+      let res = await Promise.all(mailQueue);
       console.log(res);
     } catch (err) {
       console.error(err);
