@@ -109,8 +109,8 @@ export class SeguimientoComponent implements OnInit {
     // transform usernames and names
     const students = [];
     for (let i = 0; i < studentsNames.length; i++) {
-      const studentName = studentsNames[i];
-      const studentUsername = studentsUsernames[i];
+      const studentName = studentsNames[i].trim();
+      const studentUsername = studentsUsernames[i].trim();
 
       students.push({
         studentName,
