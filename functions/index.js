@@ -47,31 +47,49 @@ exports.confirmSeguimientoForm = functions.firestore
     const oldResponseData = change.before.data();
     const responseId = context.params.id;
 
-    const msg = {
-      to: `${newResponseData.mentorUsername}@utpl.edu.ec`,
-      from: 'bruno.be81@gmail.com',
-      templateId: 'd-3c06731ec93343b797e4af2d13ececfe',
-      dynamic_template_data: Object.assign(newResponseData, {
-        formId: responseId
-      })
-    };
+    // get changed users documents
+    const newStudents = newResponseData.students;
+    const oldStudents = oldResponseData.students;
 
-    if (newResponseData.confirmationStatus === 'ACCEPTED') {
-      // Confirmed
-      msg.dynamic_template_data.subject =
-        'Tu Formulario de Seguimiento ha sido ACEPTADO - Proyecto Mentores';
-      msg.dynamic_template_data.status = 'ACEPTADO';
-    } else if (newResponseData.confirmationStatus === 'REJECTED') {
-      // Rejected
-      msg.dynamic_template_data.subject =
-        'Tu Formulario de Seguimiento ha sido RECHAZADO - Proyecto Mentores';
-      msg.dynamic_template_data.status = 'RECHAZADO';
-    } else {
-      return;
+    if (newStudents.length !== oldStudents.length) {
+      throw new Error("Students length doesn't match.");
+    }
+
+    // check witch student changed, to send emails
+    const mailQueue = [];
+    for (let i = 0; i < newStudents.length; i++) {
+      const newStudent = newStudents[i];
+      const oldStudent = oldStudents[i];
+
+      if (JSON.stringify(newStudent) !== JSON.stringify(oldStudent)) {
+        const msg = {
+          to: `${newResponseData.mentorUsername}@utpl.edu.ec`,
+          from: 'bruno.be81@gmail.com',
+          templateId: 'd-3c06731ec93343b797e4af2d13ececfe',
+          dynamic_template_data: Object.assign(newResponseData, {
+            formId: responseId,
+            studentName: newStudent.studentName
+          })
+        };
+
+        if (newStudent.confirmationStatus === 'ACCEPTED') {
+          // Confirmed
+          msg.dynamic_template_data.subject = `Tu Formulario de Seguimiento ha sido ACEPTADO por ${newStudent.studentName} - Proyecto Mentores`;
+          msg.dynamic_template_data.status = 'ACEPTADO';
+        } else if (newStudent.confirmationStatus === 'REJECTED') {
+          // Rejected
+          msg.dynamic_template_data.subject = `Tu Formulario de Seguimiento ha sido RECHAZADO por ${newStudent.studentName} - Proyecto Mentores`;
+          msg.dynamic_template_data.status = 'RECHAZADO';
+        } else {
+          continue;
+        }
+
+        mailQueue.push(sgMail.send(msg));
+      }
     }
 
     try {
-      let res = await sgMail.send(msg);
+      let res = await Promise.all(mailQueue);
       console.log(res);
     } catch (err) {
       console.error(err);
