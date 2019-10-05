@@ -21,8 +21,8 @@ exports.mailSeguimientoForm = functions.firestore
         from: 'bruno.be81@gmail.com',
         templateId: 'd-db5d5d6bfb6649c1afcb97151da70051',
         dynamic_template_data: Object.assign(responseData, {
-          rejectLink: `https://${base_url}/validate-form/${formId}/${student.rejectKey}`,
-          approveLink: `https://${base_url}/validate-form/${formId}/${student.acceptKey}`,
+          rejectLink: `https://${base_url}/validate-form/${formId}/${student.studentUsername}/${student.rejectKey}`,
+          approveLink: `https://${base_url}/validate-form/${formId}/${student.studentUsername}/${student.acceptKey}`,
           formId,
           subject: 'Validación Seguimiento - Proyecto Mentores',
           student
@@ -74,8 +74,8 @@ exports.confirmSeguimientoForm = functions.firestore
 
         if (newStudent.confirmationStatus === 'ACCEPTED') {
           // Confirmed
-          msg.dynamic_template_data.subject = `Tu Formulario de Seguimiento ha sido ACEPTADO por ${newStudent.studentName} - Proyecto Mentores`;
-          msg.dynamic_template_data.status = 'ACEPTADO';
+          msg.dynamic_template_data.subject = `Tu Formulario de Seguimiento ha sido CONFIRMADO por ${newStudent.studentName} - Proyecto Mentores`;
+          msg.dynamic_template_data.status = 'CONFIRMADO';
         } else if (newStudent.confirmationStatus === 'REJECTED') {
           // Rejected
           msg.dynamic_template_data.subject = `Tu Formulario de Seguimiento ha sido RECHAZADO por ${newStudent.studentName} - Proyecto Mentores`;
@@ -97,9 +97,12 @@ exports.confirmSeguimientoForm = functions.firestore
   });
 
 exports.validateForm = functions.https.onRequest(async (req, res) => {
+  console.log(req.params);
+
   const params = req.params[0].split('/');
   const formId = params[2];
-  const keyID = params[3];
+  const studentUsername = params[3];
+  const keyID = params[4];
 
   let snap = await db
     .collection(`forms/seguimiento/responses/`)
@@ -108,31 +111,38 @@ exports.validateForm = functions.https.onRequest(async (req, res) => {
 
   let doc = snap.data();
 
-  if (!formId || !keyID || !snap.exists) {
+  if (!formId || !keyID || !studentUsername || !snap.exists) {
     return res.status(404).send('Petición Invalida');
   }
 
-  if (doc.acceptKey === keyID) {
-    await db
-      .collection(`forms/seguimiento/responses/`)
-      .doc(formId)
-      .update({
-        acceptKey: null,
-        rejectKey: null,
-        confirmationStatus: 'ACCEPTED'
-      });
-  } else if (doc.rejectKey === keyID) {
-    await db
-      .collection(`forms/seguimiento/responses/`)
-      .doc(formId)
-      .update({
-        acceptKey: null,
-        rejectKey: null,
-        confirmationStatus: 'REJECTED'
-      });
-  } else {
-    return res.send('Este documento ya fue confirmado.');
-  }
+  for (let i = 0; i < doc.students.length; i++) {
+    const student = doc.students[i];
 
+    if (student.studentUsername !== studentUsername) {
+      continue;
+    }
+
+    if (!student.acceptKey || !student.rejectKey) {
+      return res.send('Este documento ya fue confirmado.');
+    }
+
+    if (student.acceptKey === keyID) {
+      student.acceptKey = null;
+      student.rejectKey = null;
+      student.confirmationStatus = 'ACCEPTED';
+      doc.students[i] = student;
+      break;
+    } else if (student.rejectKey === keyID) {
+      student.acceptKey = null;
+      student.rejectKey = null;
+      student.confirmationStatus = 'REJECTED';
+      doc.students[i] = student;
+      break;
+    }
+  }
+  await db
+    .collection(`forms/seguimiento/responses/`)
+    .doc(formId)
+    .update(doc);
   return res.send('Gracias por colaborar');
 });
