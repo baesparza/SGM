@@ -30,6 +30,9 @@ export class SeguimientoComponent implements OnInit {
         this.response = data.response;
 
         this.createForm();
+        if (!!this.response) {
+          this.formData = this.response.formData;
+        }
       })
       .unsubscribe();
   }

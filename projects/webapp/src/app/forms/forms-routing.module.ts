@@ -21,8 +21,7 @@ const routes: Routes = [
     path: 'seguimiento/visualizar/:id',
     component: SeguimientoComponent,
     resolve: {
-      response: SeguimientoResponseResolver,
-      formData: SeguimientoResolver
+      response: SeguimientoResponseResolver
     }
   }
 ];
