@@ -16,7 +16,7 @@
 
   <h4>Seguimiento a Estudiantes de Nuevo Ingreso</h4>
   <p>
-    <span>Octubre 2019 - febrero 2020</span>
+    <span>{{ formData.periodo }}</span>
     <br />
     <small>(Deberá ser completado por el Estudiante Mentor)</small>
   </p>
@@ -38,20 +38,20 @@
       <tr>
         <th scope="row">Periodo Académico:</th>
         <td>
-          Octubre 2019 - Febrero 2020
+          {{ formData.periodo }}
         </td>
       </tr>
       <tr>
         <th scope="row">Estudiante de:</th>
         <td>
-          Primer ciclo
+          {{ formData.ciclo }}
         </td>
       </tr>
     </tbody>
   </table>
 
   <div class="d-flex justify-content-center mt-5">
-    <h3>ACOMPAÑAMIENTO PRIMER BIMESTRE</h3>
+    <h3>ACOMPAÑAMIENTO {{ formData.bimestre }}</h3>
   </div>
 
   <form
@@ -61,25 +61,23 @@
     [ngClass]="{ 'was-validated': isFormValid }"
   >
     <fieldset [disabled]="!!response">
-      <div class="row">
-        <div class="col-md">
-          <div class="form-group row">
-            <label class="col-md-5 col-form-label" for="mentorName">
-              Nombre Mentor:
-            </label>
-            <div class="col-md-7">
-              <input
-                invalid
-                formControlName="mentorName"
-                type="text"
-                class="form-control"
-                id="mentorName"
-                placeholder="Nombre"
-                [ngClass]="{ 'is-invalid': isMentorNameInvalid }"
-              />
-            </div>
+      <div class="form-group ">
+        <p>
+          Nombre Estudiante Mentor:
+        </p>
+        <div class="row">
+          <div class="col-md">
+            <input
+              invalid
+              formControlName="mentorName"
+              type="text"
+              class="form-control"
+              id="mentorName"
+              placeholder="Nombre Mentor"
+              [ngClass]="{ 'is-invalid': isMentorNameInvalid }"
+            />
           </div>
-          <div class="input-group mb-3">
+          <div class="col-md input-group">
             <input
               formControlName="mentorUsername"
               type="text"
@@ -99,42 +97,45 @@
             </div>
           </div>
         </div>
-        <div class="col-md">
-          <div class="form-group row">
-            <label for="studentName" class="col-md-5 col-form-label">
-              Nombre Estudiante:
-            </label>
-            <div class="col-md-7">
-              <input
-                formControlName="studentName"
-                type="text"
-                class="form-control"
-                id="studentName"
-                placeholder="Nombre"
-                [ngClass]="{ 'is-invalid': isStudentNameInvalid }"
-              />
-            </div>
+      </div>
+      <div class="form-group">
+        <p>
+          Nombres Estudiantes:
+        </p>
+        <div class="row">
+          <div class="col-md">
+            <input
+              formControlName="studentsNames"
+              type="text"
+              class="form-control"
+              id="studentsNames"
+              placeholder="Nombres separados por coma"
+              [ngClass]="{ 'is-invalid': isStudentsNamesInvalid }"
+            />
           </div>
-          <div class="input-group mb-3">
+          <div class="col-md input-group">
             <input
               type="text"
               class="form-control"
-              placeholder="Usuario UTPL del estudiante de nuevo ingreso"
-              aria-label="Usuario UTPL del estudiante de nuevo ingreso"
-              aria-describedby="studentUsername"
-              formControlName="studentUsername"
-              [ngClass]="{ 'is-invalid': isStudentUsernameInvalid }"
+              placeholder="Usuarios UTPL del estudiante de nuevo ingreso separados por coma"
+              aria-label="Usuarios UTPL del estudiante de nuevo ingreso separados por coma"
+              aria-describedby="studentsUsernames"
+              formControlName="studentsUsernames"
+              [ngClass]="{ 'is-invalid': isStudentsUsernamesInvalid }"
             />
             <div class="input-group-append">
-              <span class="input-group-text" id="studentUsername"
+              <span class="input-group-text" id="studentsUsernames"
                 >@utpl.edu.ec</span
               >
             </div>
-            <div class="invalid-feedback" *ngIf="isStudentUsernameInvalid">
-              Tiene que ser un formato de usuario UTPL valido.
+            <div class="invalid-feedback" *ngIf="isStudentsUsernamesInvalid">
+              Tiene que ser formatos de usuarios UTPL validos.
             </div>
           </div>
         </div>
+        <small id="passwordHelpBlock" class="form-text text-muted">
+          Puedes escribir varios usuarios si los separas con comas.
+        </small>
       </div>
       <div class="form-group row">
         <div class="col-md-2">Seguimiento</div>
@@ -149,7 +150,7 @@
             [ngClass]="{ 'is-invalid': isFollowInvalid }"
           >
             <option selected></option>
-            <option *ngFor="let item of followingTypes" [value]="item">
+            <option *ngFor="let item of formData.followingTypes" [value]="item">
               {{ item }}
             </option>
           </select>
@@ -163,9 +164,9 @@
             formControlName="problemTypes"
             [ngClass]="{ 'is-invalid': isProblemTypesInvalid }"
             multiple
-            [size]="problemTypes.length"
+            [size]="formData.problemTypes.length"
           >
-            <option *ngFor="let item of problemTypes" [value]="item">
+            <option *ngFor="let item of formData.problemTypes" [value]="item">
               {{ item }}
             </option>
           </select>

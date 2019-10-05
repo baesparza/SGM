@@ -20,16 +20,13 @@ export class SeguimientoComponent implements OnInit {
   followingForm: FormGroup;
   private validated = false;
 
-  problemTypes: string[];
-  followingTypes: string[];
-
   response: any;
+  formData: any;
 
   ngOnInit() {
     this.route.data
       .subscribe(data => {
-        this.problemTypes = data.formData.problemTypes;
-        this.followingTypes = data.formData.followingTypes;
+        this.formData = data.formData;
         this.response = data.response;
 
         this.createForm();
@@ -47,13 +44,13 @@ export class SeguimientoComponent implements OnInit {
         !!this.response ? this.response.mentorUsername : null,
         [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
       ],
-      studentName: [
-        !!this.response ? this.response.studentName : null,
+      studentsNames: [
+        !!this.response ? this.response.studentsNames : null,
         Validators.required
       ],
-      studentUsername: [
-        !!this.response ? this.response.studentUsername : null,
-        [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
+      studentsUsernames: [
+        !!this.response ? this.response.studentsUsernames : null,
+        [Validators.required, Validators.pattern(/^(([a-z0-9],*)*$)/)]
       ],
       topic: [
         !!this.response ? this.response.topic : null,
@@ -91,17 +88,33 @@ export class SeguimientoComponent implements OnInit {
       return;
     }
 
+    // Validate usernames and users mail
+    let studentsNames = (formValue.studentsNames as string).split(',');
+    let studentsUsernames = (formValue.studentsUsernames as string).split(',');
+    if (studentsNames.length !== studentsUsernames.length) {
+      alert(
+        'Los nombres y usuarios de estudiantes de nuevo ingreso no concuerdan.'
+      );
+      return;
+    }
+
     if (
       !confirm(
-        `Se enviara un correo a ${formValue.studentUsername}@utpl.edu.ec para que confirme la información proveída. Desea continuar?`
+        `Se enviara un correo a ${formValue.studentsUsernames} para que confirme la información proveída. Desea continuar?`
       )
     ) {
       return;
     }
 
-    try {
-      await this.db.collection('forms/seguimiento/responses').add({
-        ...formValue,
+    // transform usernames and names
+    const students = [];
+    for (let i = 0; i < studentsNames.length; i++) {
+      const studentName = studentsNames[i];
+      const studentUsername = studentsUsernames[i];
+
+      students.push({
+        studentName,
+        studentUsername,
         acceptKey: Math.random()
           .toString(36)
           .substring(7),
@@ -109,6 +122,15 @@ export class SeguimientoComponent implements OnInit {
           .toString(36)
           .substring(7),
         confirmationStatus: 'WAITING'
+      });
+    }
+
+    try {
+      await this.db.collection('forms/seguimiento/responses').add({
+        ...formValue,
+        confirmationStatus: 'WAITING',
+        formData: this.formData,
+        students
       });
       alert('Todos los cambios están guardados');
       this.router.navigate(['/formularios']);
@@ -137,12 +159,12 @@ export class SeguimientoComponent implements OnInit {
     const control = this.followingForm.controls.mentorUsername;
     return control.invalid && (control.touched || this.validated);
   }
-  get isStudentNameInvalid() {
-    const control = this.followingForm.controls.studentName;
+  get isStudentsNamesInvalid() {
+    const control = this.followingForm.controls.studentsNames;
     return control.invalid && (control.touched || this.validated);
   }
-  get isStudentUsernameInvalid() {
-    const control = this.followingForm.controls.studentUsername;
+  get isStudentsUsernamesInvalid() {
+    const control = this.followingForm.controls.studentsUsernames;
     return control.invalid && (control.touched || this.validated);
   }
   get isTopicInvalid() {
