@@ -26,18 +26,35 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Mentor</th>
-        <th scope="col">Estudiantes</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Nombre Mentor</th>
+        <th scope="col">Nombre Estudiante</th>
+        <th scope="col">Usuario Estudiante</th>
+        <th scope="col">Estado Confirmación</th>
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let res of responses; let i = index">
         <th scope="row">{{ i + 1 }}</th>
         <td>{{ res.mentorName }}</td>
-        <td>{{ res.studentsNames }}</td>
-        <td>{{ res.confirmationStatus }}</td>
+        <td>
+          <span *ngFor="let student of res.students">
+            {{ student.studentName }}
+            <br />
+          </span>
+        </td>
+        <td>
+          <span *ngFor="let student of res.students">
+            {{ student.studentUsername }}
+            <br />
+          </span>
+        </td>
+        <td>
+          <span *ngFor="let student of res.students">
+            {{ student.confirmationStatus }}
+            <br />
+          </span>
+        </td>
         <td>
           <a
             class="btn btn-link"

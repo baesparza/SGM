@@ -131,7 +131,6 @@ export class SeguimientoComponent implements OnInit {
     try {
       await this.db.collection('forms/seguimiento/responses').add({
         ...formValue,
-        confirmationStatus: 'WAITING',
         formData: this.formData,
         students
       });
