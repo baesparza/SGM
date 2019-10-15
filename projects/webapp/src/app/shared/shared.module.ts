@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 const SHARED_MODULES = [ReactiveFormsModule];
-const FIREBASE_MODULES = [AngularFirestoreModule];
+const FIREBASE_MODULES = [AngularFirestoreModule, AngularFireStorageModule];
 
 @NgModule({
   imports: FIREBASE_MODULES,
