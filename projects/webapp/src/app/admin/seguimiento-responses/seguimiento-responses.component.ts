@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sgm-seguimiento-responses',
@@ -16,7 +15,9 @@ export class SeguimientoResponsesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.db
-      .collection('forms/seguimiento/responses')
+      .collection('forms/seguimiento/responses', query =>
+        query.orderBy('created', 'desc')
+      )
       .snapshotChanges()
       .subscribe(snap => {
         this.responses = [];

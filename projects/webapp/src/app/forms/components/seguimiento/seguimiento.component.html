@@ -6,8 +6,8 @@
   <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <h4 class="alert-heading">Testing</h4>
     <p class="mb-0">
-      Este formulario es una version de prueba, todos los datos que se suban a traves del formulario
-      serán eliminados
+      Este formulario es una version de prueba, todos los datos que se suban a
+      traves del formulario serán eliminados
     </p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -124,7 +124,9 @@
               [ngClass]="{ 'is-invalid': isStudentsUsernamesInvalid }"
             />
             <div class="input-group-append">
-              <span class="input-group-text" id="studentsUsernames">@utpl.edu.ec</span>
+              <span class="input-group-text" id="studentsUsernames"
+                >@utpl.edu.ec</span
+              >
             </div>
             <div class="invalid-feedback" *ngIf="isStudentsUsernamesInvalid">
               Tiene que ser formatos de usuarios UTPL validos.
@@ -139,7 +141,8 @@
         <div class="col-md-2">Seguimiento</div>
         <div class="col-md-10">
           <p class="mb-2">
-            Marcar el tipo de acercamiento que se mantuvo con el estudiante de nuevo ingreso.
+            Marcar el tipo de acercamiento que se mantuvo con el estudiante de
+            nuevo ingreso.
           </p>
           <select
             class="custom-select"
@@ -217,11 +220,11 @@
       </div>
       <div class="form-group row">
         <label for="solutions" class="col-md-2 col-form-label">
-          Soluciones
+          Anexos
         </label>
 
         <div class="col-md-10">
-          <div class="custom-file">
+          <div class="custom-file" *ngIf="!response; else assets">
             <input
               [ngClass]="{ 'is-invalid': isSolutionsInvalid }"
               type="file"
@@ -231,11 +234,26 @@
               multiple
               (change)="onFileChange($event)"
             />
-            <label class="custom-file-label" for="anexos">{{ filenameValue }}</label>
+            <label class="custom-file-label" for="anexos">{{
+              filenameValue
+            }}</label>
             <small class="form-text text-muted">
               Selecciona varios archivos a la vez.
             </small>
           </div>
+
+          <ng-template #assets>
+            <a
+              [href]="asset"
+              target="_blank"
+              rel="noopener noreferrer"
+              *ngFor="let asset of filenameValue; let i = index"
+              class="btn btn-link"
+              style="pointer-events: all;"
+            >
+              Archivo {{ i + 1 }}
+            </a>
+          </ng-template>
         </div>
       </div>
     </fieldset>
@@ -243,7 +261,12 @@
       <button class="btn btn-link" (click)="return()" type="button">
         Volver al Inicio
       </button>
-      <button type="submit" class="btn btn-primary" [disabled]="isButtonDisabled" *ngIf="!response">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isButtonDisabled"
+        *ngIf="!response"
+      >
         Guardar
       </button>
     </div>

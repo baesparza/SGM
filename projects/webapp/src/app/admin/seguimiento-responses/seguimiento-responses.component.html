@@ -26,6 +26,7 @@
     <thead>
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Fecha</th>
         <th scope="col">Nombre Mentor</th>
         <th scope="col">Nombre Estudiante</th>
         <th scope="col">Usuario Estudiante</th>
@@ -36,6 +37,7 @@
     <tbody>
       <tr *ngFor="let res of responses; let i = index">
         <th scope="row">{{ i + 1 }}</th>
+        <td>{{ res?.created.toMillis() | date }}</td>
         <td>{{ res.mentorName }}</td>
         <td>
           <span *ngFor="let student of res.students">

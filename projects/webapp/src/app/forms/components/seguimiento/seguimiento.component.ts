@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { tap, finalize } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'sgm-seguimiento',
@@ -43,53 +42,47 @@ export class SeguimientoComponent implements OnInit {
 
   private createForm() {
     this.followingForm = this.fb.group({
-      mentorName: [!!this.response ? this.response.mentorName : null, Validators.required],
+      mentorName: [
+        !!this.response ? this.response.mentorName : null,
+        Validators.required
+      ],
       mentorUsername: [
         !!this.response ? this.response.mentorUsername : null,
         [Validators.required, Validators.pattern(/^[a-z0-9]*$/)]
       ],
-      studentsNames: [!!this.response ? this.response.studentsNames : null, Validators.required],
+      studentsNames: [
+        !!this.response ? this.response.studentsNames : null,
+        Validators.required
+      ],
       studentsUsernames: [
         !!this.response ? this.response.studentsUsernames : null,
         [Validators.required, Validators.pattern(/^(([a-z0-9],*)*$)/)]
       ],
-      topic: [!!this.response ? this.response.topic : null, Validators.required],
-      problems: [!!this.response ? this.response.problems : null, Validators.required],
-      solutions: [!!this.response ? this.response.solutions : null, Validators.required],
-      follow: [!!this.response ? this.response.follow : null, Validators.required],
-      problemTypes: [!!this.response ? this.response.problemTypes : null, Validators.required],
+      topic: [
+        !!this.response ? this.response.topic : null,
+        Validators.required
+      ],
+      problems: [
+        !!this.response ? this.response.problems : null,
+        Validators.required
+      ],
+      solutions: [
+        !!this.response ? this.response.solutions : null,
+        Validators.required
+      ],
+      follow: [
+        !!this.response ? this.response.follow : null,
+        Validators.required
+      ],
+      problemTypes: [
+        !!this.response ? this.response.problemTypes : null,
+        Validators.required
+      ],
       assets: [!!this.response ? this.response.assets : null]
     });
   }
 
   async submit() {
-    // --------------------------------
-    // FIXME: upload files
-    // --------------------------------
-    const tasks = [];
-    const refs = [];
-    for (let i = 0; i < this.uploadFiles.length; i++) {
-      const file = this.uploadFiles[i];
-      const path = `seguimiento/assets/${file.name}`;
-      const ref = this.storage.ref(path);
-      refs.push(ref.getDownloadURL().toPromise());
-      tasks.push(
-        this.storage
-          .upload(path, file)
-          .snapshotChanges()
-          .pipe(
-            tap(console.log),
-            // The file's download URL
-            finalize(async () => await ref.getDownloadURL().toPromise())
-          )
-          .toPromise()
-      );
-    }
-    console.log(await Promise.all(refs));
-    console.log(await Promise.all(tasks));
-
-    return;
-
     if (!!this.response) {
       return;
     }
@@ -108,7 +101,9 @@ export class SeguimientoComponent implements OnInit {
     let studentsNames = (formValue.studentsNames as string).split(',');
     let studentsUsernames = (formValue.studentsUsernames as string).split(',');
     if (studentsNames.length !== studentsUsernames.length) {
-      alert('Los nombres y usuarios de estudiantes de nuevo ingreso no concuerdan.');
+      alert(
+        'Los nombres y usuarios de estudiantes de nuevo ingreso no concuerdan.'
+      );
       return;
     }
 
@@ -141,18 +136,41 @@ export class SeguimientoComponent implements OnInit {
       });
     }
 
-    // --------------------------------
-    // save on db
-    // --------------------------------
     try {
+      // --------------------------------
+      // upload files
+      // --------------------------------
+      const downloadURLS = [];
+      const date = Date.now();
+      if (!!this.uploadFiles) {
+        for (let i = 0; i < this.uploadFiles.length; i++) {
+          const file = this.uploadFiles[i];
+          const uploadPath = `seguimiento/assets/${date}/${file.name}`;
+
+          const uploadTask = await this.storage
+            .upload(uploadPath, file)
+            .snapshotChanges()
+            .toPromise();
+
+          downloadURLS.push(uploadTask.ref.getDownloadURL());
+        }
+      }
+
+      // --------------------------------
+      // save on db
+      // --------------------------------
       await this.db.collection('forms/seguimiento/responses').add({
         ...formValue,
         formData: this.formData,
-        students
+        students,
+        assets: await Promise.all(downloadURLS),
+        created: new Date()
       });
       alert('Todos los cambios están guardados');
       this.router.navigate(['/formularios']);
     } catch (error) {
+      console.log(error);
+
       alert('Ocurrió un erro al guardar... Vuelve a intentarlo');
     }
   }
@@ -166,7 +184,7 @@ export class SeguimientoComponent implements OnInit {
       files.push(this.uploadFiles[i]);
     }
 
-    const fileNames: string = files.map(f => f.name).join(';');
+    const fileNames: string = files.map(f => f.name).join('; ');
     this.followingForm.controls.assets.setValue(fileNames);
   }
 
