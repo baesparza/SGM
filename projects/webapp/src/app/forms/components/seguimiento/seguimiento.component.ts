@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'projects/webapp/src/environments/environment';
 
 @Component({
   selector: 'sgm-seguimiento',
@@ -194,6 +195,10 @@ export class SeguimientoComponent implements OnInit {
     } else {
       this.router.navigate(['/formularios']);
     }
+  }
+
+  get showTestingMessage() {
+    return !environment.production;
   }
 
   get filenameValue() {

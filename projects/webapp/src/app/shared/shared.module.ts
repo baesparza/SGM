@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const SHARED_MODULES = [ReactiveFormsModule];
 const FIREBASE_MODULES = [AngularFirestoreModule, AngularFireStorageModule];
@@ -10,7 +10,7 @@ const FIREBASE_MODULES = [AngularFirestoreModule, AngularFireStorageModule];
   imports: FIREBASE_MODULES,
   exports: FIREBASE_MODULES
 })
-class FirebaseModule {}
+export class FirebaseModule {}
 
 @NgModule({
   declarations: [],

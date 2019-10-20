@@ -3,7 +3,11 @@
 </nav>
 
 <div class="container mt-5">
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    *ngIf="showTestingMessage"
+  >
     <h4 class="alert-heading">Testing</h4>
     <p class="mb-0">
       Este formulario es una version de prueba, todos los datos que se suban a
