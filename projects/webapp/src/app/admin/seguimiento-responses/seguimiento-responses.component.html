@@ -5,6 +5,8 @@
 <div class="container mt-5">
   <h4>Respuestas - Ficha de Acompañamiento Mentorial</h4>
 
+  <br />
+
   <table class="table table-sm">
     <tbody>
       <tr>
@@ -22,38 +24,55 @@
     </tbody>
   </table>
 
+  <br />
+
   <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Fecha</th>
-        <th scope="col">Nombre Mentor</th>
-        <th scope="col">Nombre Estudiante</th>
-        <th scope="col">Usuario Estudiante</th>
+        <th scope="col">Mentor Compañero</th>
+        <th scope="col">Estudiante de Nuevo Ingreso</th>
         <th scope="col">Estado Confirmación</th>
-        <th scope="col">Acciones</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let res of responses; let i = index">
         <th scope="row">{{ i + 1 }}</th>
         <td>{{ res?.created.toMillis() | date }}</td>
-        <td>{{ res.mentorName }}</td>
+        <td>
+          {{ res.mentorName }}
+          <br />
+          <small>{{ res.mentorUsername }}@utpl.edu.ec</small>
+        </td>
         <td>
           <span *ngFor="let student of res.students">
             {{ student.studentName }}
             <br />
+            <small>{{ student.studentUsername }}@utpl.edu.ec</small>
           </span>
         </td>
         <td>
           <span *ngFor="let student of res.students">
-            {{ student.studentUsername }}
-            <br />
-          </span>
-        </td>
-        <td>
-          <span *ngFor="let student of res.students">
-            {{ student.confirmationStatus }}
+            <span
+              *ngIf="student.confirmationStatus === 'ACCEPTED'"
+              class="text-success"
+            >
+              Confirmado
+            </span>
+            <span
+              *ngIf="student.confirmationStatus === 'WAITING'"
+              class="text-info"
+            >
+              Sin Confirmar
+            </span>
+            <span
+              *ngIf="student.confirmationStatus === 'REJECTED'"
+              class="text-danger"
+            >
+              Rechazado
+            </span>
             <br />
           </span>
         </td>
